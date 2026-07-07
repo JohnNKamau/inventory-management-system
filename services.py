@@ -1,7 +1,5 @@
 import requests
 import json
-from app import inventory_db, InventoryItem
-
 
 class OpenFoodFactsService:
     BASE_URL = "https://world.openfoodfacts.org/api/v0"
@@ -64,21 +62,30 @@ class OpenFoodFactsService:
 
 
 class InventoryService:
+    # Class variables to be set by app.py
+    _db = None
+    _model = None
     
-    @staticmethod
-    def get_all_items():
-        return [item.to_dict() for item in inventory_db]
+    @classmethod
+    def init(cls, db, model):
+        """Initialize the service with database and model"""
+        cls._db = db
+        cls._model = model
     
-    @staticmethod
-    def get_item_by_id(item_id):
-        for item in inventory_db:
+    @classmethod
+    def get_all_items(cls):
+        return [item.to_dict() for item in cls._db]
+    
+    @classmethod
+    def get_item_by_id(cls, item_id):
+        for item in cls._db:
             if item.id == item_id:
                 return item.to_dict()
         return None
     
-    @staticmethod
-    def create_item(data):
-        item = InventoryItem(
+    @classmethod
+    def create_item(cls, data):
+        item = cls._model(
             name=data.get('name'),
             price=data.get('price', 0),
             quantity=data.get('quantity', 0),
@@ -87,26 +94,26 @@ class InventoryService:
             description=data.get('description'),
             category=data.get('category')
         )
-        inventory_db.append(item)
+        cls._db.append(item)
         return item.to_dict()
     
-    @staticmethod
-    def update_item(item_id, data):
-        for item in inventory_db:
+    @classmethod
+    def update_item(cls, item_id, data):
+        for item in cls._db:
             if item.id == item_id:
                 item.update(**data)
                 return item.to_dict()
         return None
     
-    @staticmethod
-    def delete_item(item_id):
-        for idx, item in enumerate(inventory_db):
+    @classmethod
+    def delete_item(cls, item_id):
+        for idx, item in enumerate(cls._db):
             if item.id == item_id:
-                return inventory_db.pop(idx).to_dict()
+                return cls._db.pop(idx).to_dict()
         return None
     
-    @staticmethod
-    def add_product_from_barcode(barcode, quantity=1, price=None):
+    @classmethod
+    def add_product_from_barcode(cls, barcode, quantity=1, price=None):
         product = OpenFoodFactsService.get_product_by_barcode(barcode)
         if not product:
             return None
@@ -121,4 +128,4 @@ class InventoryService:
             'category': product.get('category', '')
         }
         
-        return InventoryService.create_item(item_data)
+        return cls.create_item(item_data)

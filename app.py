@@ -48,6 +48,9 @@ class InventoryItem:
 
 inventory_db = []
 
+# Initialize InventoryService with database and model
+InventoryService.init(inventory_db, InventoryItem)
+
 def initialize_sample_data():
     if not inventory_db:
         items = [
