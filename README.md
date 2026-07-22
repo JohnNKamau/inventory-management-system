@@ -1,76 +1,25 @@
 # Inventory Management System
 
-## About
+## Project Overview
 
-This project is a Flask REST API for managing inventory items. It allows users to create, view, update and delete products. It also connects to the OpenFoodFacts API so products can be searched using a barcode or product name.
+This project is a Flask REST API that allows users to manage inventory items. It also connects to the OpenFoodFacts API to retrieve product information using a barcode or product search. A command-line interface (CLI) is included for interacting with the API from the terminal.
 
-A command line interface (CLI) is included to make it easier to interact with the API without using Postman.
+---
 
+## Getting Started
 
-
-## Features
-
-- View all inventory items
-- View a single inventory item
-- Add a new inventory item
-- Update an inventory item
-- Delete an inventory item
-- Search inventory items
-- Get product information from OpenFoodFacts
-- Add products from OpenFoodFacts into the inventory
-- Run tests using pytest
-
-
-
-## Technologies Used
-
-- Python
-- Flask
-- Flask-CORS
-- Requests
-- Click
-- Pytest
-- OpenFoodFacts API
-
-
-
-## Project Structure
-
-
-inventory-management-system/
-│
-├── app.py
-├── services.py
-├── cli.py
-├── requirements.txt
-├── README.md
-└── tests/
-    └── test_app.py
-
-
-
-
-## Installation
-
-Clone the repository.
+Clone the repository and move into the project directory.
 
 ```bash
 git clone <repository-url>
-```
-
-Move into the project folder.
-
-```bash
 cd inventory-management-system
 ```
 
-Create a virtual environment.
+Create and activate a virtual environment.
 
 ```bash
 python -m venv venv
 ```
-
-Activate it.
 
 Linux/macOS
 
@@ -84,7 +33,7 @@ Windows
 venv\Scripts\activate
 ```
 
-Install the required packages.
+Install the project dependencies.
 
 ```bash
 pip install -r requirements.txt
@@ -92,15 +41,15 @@ pip install -r requirements.txt
 
 ---
 
-## Running the Application
+## Starting the Application
 
-Start the Flask server.
+Run the Flask application.
 
 ```bash
 python app.py
 ```
 
-The API runs on:
+The server will start on:
 
 ```
 http://localhost:5000
@@ -108,57 +57,34 @@ http://localhost:5000
 
 ---
 
-## API Endpoints
+## Available API Routes
 
-| Method | Endpoint |
-|--------|----------|
-| GET | /api/inventory |
-| GET | /api/inventory/<id> |
-| POST | /api/inventory |
-| PATCH | /api/inventory/<id> |
-| DELETE | /api/inventory/<id> |
-| GET | /api/inventory/search?q=value |
-| GET | /api/openfoodfacts/barcode/<barcode> |
-| GET | /api/openfoodfacts/search?q=value |
-| POST | /api/inventory/from-barcode |
+| Method | Route | Purpose |
+|--------|-------|---------|
+| GET | `/api/inventory` | Retrieve all inventory items |
+| GET | `/api/inventory/<id>` | Retrieve one inventory item |
+| POST | `/api/inventory` | Create a new inventory item |
+| PATCH | `/api/inventory/<id>` | Update an existing item |
+| DELETE | `/api/inventory/<id>` | Remove an inventory item |
+| GET | `/api/openfoodfacts/barcode/<barcode>` | Find a product using a barcode |
+| GET | `/api/openfoodfacts/search?q=name` | Search products by name |
+| POST | `/api/inventory/from-barcode` | Add a product from OpenFoodFacts to the inventory |
 
 ---
 
-## CLI Commands
+## Using the CLI
 
-View all items
+Make sure the Flask server is running before using any CLI commands.
+
+Some common commands are:
 
 ```bash
 python cli.py view
-```
-
-Add an item
-
-```bash
+python cli.py view --id ITEM_ID
 python cli.py add --name "Milk" --price 3.99 --quantity 20
-```
-
-Update an item
-
-```bash
 python cli.py update --id ITEM_ID --price 4.99
-```
-
-Delete an item
-
-```bash
 python cli.py delete --id ITEM_ID
-```
-
-Find a product by barcode
-
-```bash
 python cli.py fetch --barcode 737628064502
-```
-
-Search OpenFoodFacts
-
-```bash
 python cli.py search --query milk
 ```
 
@@ -166,7 +92,7 @@ python cli.py search --query milk
 
 ## Running Tests
 
-Run all tests.
+Run all tests with:
 
 ```bash
 pytest
@@ -180,12 +106,14 @@ pytest -v
 
 ---
 
-## Notes
+## OpenFoodFacts Integration
 
-The project stores inventory in memory using a Python list, so data is cleared whenever the application is restarted. This was done to keep the project simple and focus on learning Flask APIs, CRUD operations, API integration and testing.
+The application connects to the OpenFoodFacts API to retrieve product details such as the product name, brand, category and description. Users can search for products or import them directly into the inventory using a barcode.
 
 ---
 
-## Author
+## Additional Information
 
-John Kamau
+- Inventory data is stored in memory, so restarting the application clears all items.
+- The CLI communicates with the Flask API using HTTP requests.
+- A running Flask server is required before using the CLI commands.
