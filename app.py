@@ -4,8 +4,46 @@ import requests
 app = Flask(__name__)
 
 inventory = [
-    {"id": 1, "name": "Organic Almond Milk", "brand": "Silk", "ingredients": "Filtered water, almonds, cane sugar", "price": 3.99, "stock": 10},
-    {"id": 2, "name": "Whole Wheat Bread", "brand": "Nature's Own", "ingredients": "Whole wheat flour, water, yeast", "price": 2.49, "stock": 5}
+    {
+        "id": 1,
+        "name": "Unga Maize Flour 2kg",
+        "brand": "Unga",
+        "ingredients": "Whole maize flour",
+        "price": 185.00,
+        "stock": 25
+    },
+    {
+        "id": 2,
+        "name": "Brookside Fresh Milk 500ml",
+        "brand": "Brookside",
+        "ingredients": "Fresh cow's milk",
+        "price": 75.00,
+        "stock": 40
+    },
+    {
+        "id": 3,
+        "name": "Kabras Sugar 2kg",
+        "brand": "Kabras",
+        "ingredients": "Refined sugar",
+        "price": 320.00,
+        "stock": 18
+    },
+    {
+        "id": 4,
+        "name": "Fresh Fry Cooking Oil 1L",
+        "brand": "Fresh Fry",
+        "ingredients": "Refined vegetable oil",
+        "price": 340.00,
+        "stock": 15
+    },
+    {
+        "id": 5,
+        "name": "Ketepa Pride Tea Bags",
+        "brand": "Ketepa",
+        "ingredients": "Premium black tea",
+        "price": 210.00,
+        "stock": 30
+    }
 ]
 
 def fetch_product_details(barcode_or_name):
